@@ -45,7 +45,7 @@ const FancySwitch = React.forwardRef<HTMLDivElement, FancySwitchProps>(
 
       if (selectedElement && containerRef.current) {
         const computedStyle = window.getComputedStyle(selectedElement)
-        const paddingLeft = parseInt(
+        const paddingLeft = parseFloat(
           computedStyle.getPropertyValue('padding-left')
         )
 
