@@ -44,27 +44,26 @@ const FancySwitch = React.forwardRef<HTMLDivElement, FancySwitchProps>(
       const selectedElement = optionRefs.current[selectedOption]
 
       if (selectedElement && containerRef.current) {
-        const computedStyle = window.getComputedStyle(selectedElement)
-        const paddingLeft = parseFloat(
-          computedStyle.getPropertyValue('padding-left')
-        )
+        const cr = containerRef.current.getBoundingClientRect()
+        const sr = selectedElement.getBoundingClientRect()
 
-        const selectedElementPosition = selectedElement.getBoundingClientRect()
-        const containerPosition = containerRef.current.getBoundingClientRect()
+        const ccs = window.getComputedStyle(containerRef.current)
+        const scs = window.getComputedStyle(selectedElement)
 
-        const x = Math.max(
-          selectedElementPosition.left -
-            containerPosition.left -
-            paddingLeft / 2,
-          0
-        )
+        // margin not needed for the container
+        const cpl = parseFloat(ccs.paddingLeft)
+        const cbl = parseFloat(ccs.borderLeftWidth)
+
+        // handle margin for the selected element
+        const sml = parseFloat(scs.marginLeft)
+        const smr = parseFloat(scs.marginRight)
+
+        const translateX = sr.left - cr.left - cpl - cbl - sml
 
         setHighlighterStyle({
-          height: selectedElementPosition.height,
-          width: selectedElementPosition.width,
-
-          // or just use left-0
-          transform: 'translateX(' + x + 'px)'
+          height: sr.height,
+          width: sr.width + sml + smr,
+          transform: `translateX(${translateX}px)`
         })
       }
     }, [selectedOption])
