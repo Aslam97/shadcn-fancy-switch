@@ -6,6 +6,8 @@ export interface FancySwitchProps
   value?: string | null
   onChange?: (value: string) => void
   options: string[]
+  radioClassName?: string
+  activeClassName?: string
 }
 
 export type OptionRefs = {
@@ -13,7 +15,18 @@ export type OptionRefs = {
 }
 
 const FancySwitch = React.forwardRef<HTMLDivElement, FancySwitchProps>(
-  ({ options, value, onChange, className, ...props }, ref) => {
+  (
+    {
+      options,
+      value,
+      onChange,
+      radioClassName,
+      activeClassName,
+      className,
+      ...props
+    },
+    ref
+  ) => {
     const [selectedOption, setSelectedOption] = React.useState(
       value ?? options[0]
     )
@@ -39,17 +52,19 @@ const FancySwitch = React.forwardRef<HTMLDivElement, FancySwitchProps>(
         const selectedElementPosition = selectedElement.getBoundingClientRect()
         const containerPosition = containerRef.current.getBoundingClientRect()
 
+        const x = Math.max(
+          selectedElementPosition.left -
+            containerPosition.left -
+            paddingLeft / 2,
+          0
+        )
+
         setHighlighterStyle({
           height: selectedElementPosition.height,
           width: selectedElementPosition.width,
 
           // or just use left-0
-          transform:
-            'translateX(' +
-            (selectedElementPosition.left -
-              containerPosition.left -
-              paddingLeft / 2) +
-            'px)'
+          transform: 'translateX(' + x + 'px)'
         })
       }
     }, [selectedOption])
@@ -64,10 +79,17 @@ const FancySwitch = React.forwardRef<HTMLDivElement, FancySwitchProps>(
     }
 
     return (
-      <div className={cn(className)} ref={containerRef} {...props}>
-        <div className="relative inline-flex rounded-full bg-muted p-2">
+      <div
+        className={cn('rounded-full bg-muted p-2', className)}
+        ref={containerRef}
+        {...props}
+      >
+        <div className="relative inline-flex">
           <div
-            className="absolute rounded-full bg-primary transition-all duration-300"
+            className={cn(
+              'absolute rounded-full bg-primary transition-all duration-300',
+              activeClassName
+            )}
             style={highlighterStyle}
           />
           {options.map((option) => (
@@ -83,7 +105,8 @@ const FancySwitch = React.forwardRef<HTMLDivElement, FancySwitchProps>(
               onClick={() => handleOptionChange(option)}
               className={cn(
                 'relative flex h-9 cursor-pointer items-center rounded-full px-3.5 text-sm font-medium transition-colors duration-200',
-                { 'text-primary-foreground': selectedOption === option }
+                { 'text-primary-foreground': selectedOption === option },
+                radioClassName
               )}
             >
               {option}
