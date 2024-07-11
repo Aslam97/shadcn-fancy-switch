@@ -1,4 +1,4 @@
-import { FancySwitch } from '@/components/fancy-switch/fancy-switch'
+import { FancySwitch } from '@/components/fancy-switch'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -42,7 +42,7 @@ function App() {
           <div className="mt-4 flex justify-center">
             <div className="relative rounded-full px-3 py-1 text-sm leading-6 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
               <a
-                href="https://github.com/Aslam97/shadcn-tiptap"
+                href="https://github.com/Aslam97/shadcn-fancy-switch"
                 className="font-semibold text-primary"
               >
                 View on Github <span aria-hidden="true">→</span>

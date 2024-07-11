@@ -1,30 +1,30 @@
-# React + TypeScript + Vite
+<a href="https://shadcn-fancy-switch.vercel.app" target="_blank">
+  <img src="https://i.imgur.com/szCHnuV.png" alt="React Fancy Switch" />
+</a>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Simple Fancy Switch Component.
 
-Currently, two official plugins are available:
+## Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Copy the `src/components/fancy-switch` directory and paste into your project and customize to your needs. The code is yours.
 
-## Expanding the ESLint configuration
+## Usage
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+```jsx
+import React, { useState } from 'react'
+import { FancySwitch } from '@/components/fancy-switch'
 
-- Configure the top-level `parserOptions` property like this:
+const options: string[] = ['Delivery', 'Pickup', 'Shipping']
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
+export const App = () => {
+  const [value, setValue] = useState<string>()
+
+  return (
+    <FancySwitch
+      value={value}
+      onChange={(value) => setValue(value)}
+      options={options}
+    />
+  )
 }
 ```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
