@@ -1,5 +1,5 @@
 <a href="https://shadcn-fancy-switch.vercel.app" target="_blank">
-  <img src="https://i.imgur.com/szCHnuV.png" alt="React Fancy Switch" />
+  <img src="https://i.imgur.com/xxA5q5c.png" alt="React Fancy Switch" />
 </a>
 
 Simple Fancy Switch Component.
