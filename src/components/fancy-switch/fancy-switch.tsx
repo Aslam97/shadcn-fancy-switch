@@ -174,6 +174,7 @@ const FancySwitch = React.forwardRef<HTMLDivElement, FancySwitchProps>(
             ...highlighterStyle
           }}
           aria-hidden="true"
+          data-highlighter
         />
 
         {memoizedOptions.map((option, index) => (

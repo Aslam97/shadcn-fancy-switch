@@ -83,6 +83,7 @@ function App() {
                     <FancySwitch
                       {...field}
                       options={orderTypes}
+                      data-testid="orderType"
                       className="flex rounded-full bg-muted p-2"
                       highlighterClassName="bg-primary rounded-full"
                       radioClassName={cn(
