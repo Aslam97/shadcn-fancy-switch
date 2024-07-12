@@ -12,19 +12,34 @@ import {
 } from '@/components/ui/form'
 import { cn } from './lib/utils'
 
-const options: string[] = ['Delivery', 'Pickup', 'Shipping']
+const orderTypes: string[] = ['Delivery', 'Pickup', 'Shipping']
+const options: { label: string; value: number }[] = [
+  { label: 'Publish', value: 1 },
+  { label: 'Draft', value: 0 }
+]
+const pets: { text: string; id: number }[] = [
+  { text: 'Car, (AKA Cat)', id: 1 },
+  { text: 'Dog', id: 2 }
+]
 
 const FormSchema = z.object({
+  isPublished: z.coerce.number(),
+  orderType: z.string().min(1, {
+    message: 'Order type is required'
+  }),
   option: z.string().min(1, {
     message: 'Option is required'
-  })
+  }),
+  pet: z.coerce.number()
 })
 
 function App() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      option: options[0]
+      orderType: 'Delivery',
+      isPublished: 0,
+      pet: 1
     }
   })
 
@@ -58,18 +73,75 @@ function App() {
           >
             <FormField
               control={form.control}
-              name="option"
+              name="orderType"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="sr-only">Username</FormLabel>
+                  <FormLabel>
+                    Order type: {form.getValues('orderType')}
+                  </FormLabel>
+                  <FormControl>
+                    <FancySwitch
+                      {...field}
+                      options={orderTypes}
+                      className="flex rounded-full bg-muted p-2"
+                      highlighterClassName="bg-primary rounded-full"
+                      radioClassName={cn(
+                        'relative mx-2 flex h-9 cursor-pointer items-center justify-center rounded-full px-3.5 text-sm font-medium transition-colors data-[checked]:text-primary-foreground'
+                      )}
+                      highlighterIncludeMargin={true}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="isPublished"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Is published: {form.getValues('isPublished')}
+                  </FormLabel>
                   <FormControl>
                     <FancySwitch
                       {...field}
                       options={options}
-                      className={cn(
-                        'w-full',
-                        form.formState.errors.option &&
-                          'rounded-full border border-destructive'
+                      className="rounded-xl bg-muted p-2"
+                      highlighterClassName="bg-primary rounded-xl"
+                      radioClassName={cn(
+                        'relative flex h-9 cursor-pointer items-center justify-center rounded-full px-3.5 text-sm font-medium transition-colors data-[checked]:text-primary-foreground'
+                      )}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="pet"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Pet:{' '}
+                    {
+                      pets.find((p) => p.id === Number(form.getValues('pet')))
+                        ?.text
+                    }
+                  </FormLabel>
+                  <FormControl>
+                    <FancySwitch
+                      {...field}
+                      options={pets}
+                      valueKey="id"
+                      labelKey="text"
+                      className="rounded-3xl bg-muted p-2"
+                      highlighterClassName="bg-primary rounded-full"
+                      radioClassName={cn(
+                        'relative mx-2 flex h-9 cursor-pointer items-center justify-center rounded-full px-3.5 text-sm font-medium transition-colors data-[checked]:text-primary-foreground'
                       )}
                     />
                   </FormControl>
