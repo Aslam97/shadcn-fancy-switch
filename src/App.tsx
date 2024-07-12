@@ -86,7 +86,7 @@ function App() {
                       className="flex rounded-full bg-muted p-2"
                       highlighterClassName="bg-primary rounded-full"
                       radioClassName={cn(
-                        'relative mx-2 flex h-9 cursor-pointer items-center justify-center rounded-full px-3.5 text-sm font-medium transition-colors data-[checked]:text-primary-foreground'
+                        'relative mx-2 flex focus:outline-none h-9 cursor-pointer items-center justify-center rounded-full px-3.5 text-sm font-medium transition-colors data-[checked]:text-primary-foreground'
                       )}
                       highlighterIncludeMargin={true}
                     />
