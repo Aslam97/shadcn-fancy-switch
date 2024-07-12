@@ -24,6 +24,8 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "dotenv": "^16.4.5",
+    "@playwright/experimental-ct-react": "^1.45.1",
     "@playwright/test": "^1.45.1",
     "@types/node": "^20.14.10",
     "@types/react": "^18.3.3",
